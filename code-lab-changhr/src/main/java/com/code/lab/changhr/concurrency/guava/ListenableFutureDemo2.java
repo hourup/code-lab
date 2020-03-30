@@ -1,6 +1,6 @@
 package com.code.lab.changhr.concurrency.guava;
 
-import com.code.lab.changhr.concurrency.guava.utils.Delay;
+import com.code.lab.changhr.concurrency.utils.Delay;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.time.StopWatch;
 

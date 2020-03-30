@@ -1,4 +1,4 @@
-package com.code.lab.changhr.concurrency.guava.utils;
+package com.code.lab.changhr.concurrency.utils;
 
 import cn.hutool.core.util.RandomUtil;
 

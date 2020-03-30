@@ -1,7 +1,7 @@
 package com.code.lab.changhr.concurrency.guava;
 
 import cn.hutool.core.util.RandomUtil;
-import com.code.lab.changhr.concurrency.guava.utils.Delay;
+import com.code.lab.changhr.concurrency.utils.Delay;
 
 import java.util.concurrent.Callable;
 
