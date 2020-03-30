@@ -4,6 +4,8 @@ import com.code.lab.changhr.proxy.IUserDao;
 import com.code.lab.changhr.proxy.UserDao;
 
 /**
+ * jdk 动态代理测试
+ *
  * @author changhr
  * @create 2019-10-09 10:18
  */

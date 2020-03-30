@@ -5,6 +5,8 @@ import com.code.lab.changhr.proxy.UserDao;
 import com.code.lab.changhr.proxy.UserDaoNoInf;
 
 /**
+ * cglib 动态代理测试
+ *
  * @author changhr
  * @create 2019-10-09 11:02
  */
@@ -22,7 +24,7 @@ public class CglibProxyTest {
 
         UserDaoNoInf userDaoNoInf = new UserDaoNoInf();
         System.out.println(userDaoNoInf);
-        UserDaoNoInf proxyUserDaoNoInf = (UserDaoNoInf)new CgProxyFactory(userDaoNoInf).getProxyInstance();
+        UserDaoNoInf proxyUserDaoNoInf = (UserDaoNoInf) new CgProxyFactory(userDaoNoInf).getProxyInstance();
         System.out.println(proxyUserDaoNoInf.getClass());
         proxyUserDaoNoInf.save();
     }
