@@ -18,9 +18,10 @@ public class Delay {
      *
      * @param delayTime 延迟时间，ms
      */
-    public static void delay(Integer delayTime) {
+    public static Integer delay(Integer delayTime) {
         try {
             Thread.sleep(delayTime);
+            return delayTime;
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
