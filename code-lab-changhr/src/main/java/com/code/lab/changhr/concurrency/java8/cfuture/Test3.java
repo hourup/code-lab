@@ -60,7 +60,8 @@ public class Test3 {
         List<CompletableFuture<String>> priceFutures = shops.stream()
                 .map(shop -> CompletableFuture.supplyAsync(() -> shop.getPriceWithDiscountCode(product), executor))
                 .map(future -> future.thenApply(Quote::parse))
-                .map(future -> future.thenCompose(quote -> CompletableFuture.supplyAsync(() -> Discount.applyDiscount(quote), executor)))
+                .map(future -> future.thenApplyAsync(Discount::applyDiscount, executor))
+//                .map(future -> future.thenCompose(quote -> CompletableFuture.supplyAsync(() -> Discount.applyDiscount(quote), executor)))
                 .collect(Collectors.toList());
 
         return priceFutures.stream()
