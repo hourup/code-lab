@@ -12,6 +12,7 @@
 
     <modules>
         <module>code-lab-changhr</module>
+        <module>tdd-in-springboot</module>
     </modules>
 
     <properties>
