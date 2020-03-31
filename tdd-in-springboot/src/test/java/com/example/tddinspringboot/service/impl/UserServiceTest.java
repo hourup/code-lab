@@ -45,7 +45,7 @@ public class UserServiceTest {
         mockUserEntity.setNickName("tdd");
         mockUserEntity.setGender("male");
         mockUserEntity.setAge(18);
-        Mockito.when(userRepository.saveDto(Mockito.any(UserDTO.class)))
+        Mockito.when(userRepository.save(Mockito.any(UserEntity.class)))
                 .thenReturn(mockUserEntity);
 
         Optional<UserDTO> saveUser = userService.add(dto);
@@ -66,7 +66,7 @@ public class UserServiceTest {
         mockUserEntity.setGender("male");
         mockUserEntity.setAge(18);
 
-        Mockito.when(userRepository.query(Mockito.anyString()))
+        Mockito.when(userRepository.findByUsername(Mockito.anyString()))
                 .thenReturn(mockUserEntity);
 
         Optional<UserDTO> userDTOOpt = userService.query("TDD");

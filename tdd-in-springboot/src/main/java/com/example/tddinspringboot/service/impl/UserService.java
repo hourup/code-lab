@@ -24,7 +24,10 @@ public class UserService implements IUserService {
 
     @Override
     public Optional<UserDTO> add(UserDTO userDTO) {
-        UserEntity user = userRepository.saveDto(userDTO);
+
+        UserEntity userEntity = new UserEntity();
+        BeanUtils.copyProperties(userDTO, userEntity);
+        UserEntity user = userRepository.save(userEntity);
         UserDTO dto = new UserDTO();
         BeanUtils.copyProperties(user, dto);
         dto.setUserId(user.getId());
@@ -33,7 +36,7 @@ public class UserService implements IUserService {
 
     @Override
     public Optional<UserDTO> query(String username) {
-        UserEntity user = userRepository.query(username);
+        UserEntity user = userRepository.findByUsername(username);
         UserDTO dto = new UserDTO();
         BeanUtils.copyProperties(user, dto);
         dto.setUserId(user.getId());
