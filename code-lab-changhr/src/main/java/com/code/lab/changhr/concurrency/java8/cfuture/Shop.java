@@ -57,10 +57,19 @@ public class Shop {
         return calculatePrice(product);
     }
 
+    /** 模拟计算价格的 API，返回折扣码 */
+    public String getPriceWithDiscountCode(String product) {
+        double price = calculatePrice(product);
+
+        Discount.Code code = Discount.Code.values()[RandomUtil.randomInt(Discount.Code.values().length)];
+
+        return String.format("%s:%.2f:%s", name, price, code);
+    }
+
     private double calculatePrice(String product) {
         // 在 getPrice 方法中引入一个模拟的延迟
         Integer delay = Delay.delay(1000);
-        System.out.println("delay time is " + delay + " ms.");
+        System.out.println("calculate price delay time is " + delay + " ms.");
         return RandomUtil.randomDouble() + product.charAt(0) + product.charAt(1);
     }
 }
