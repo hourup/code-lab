@@ -1,4 +1,4 @@
-package com.code.lab.changhr.concurrency.java8;
+package com.code.lab.changhr.concurrency.java8.future;
 
 import com.code.lab.changhr.concurrency.utils.Delay;
 
