@@ -15,7 +15,7 @@ public class Teacher extends Thread {
 
     private List<String> punishWords = Arrays.asList("internationalization", "hedgehog", "penicillin", "oasis", "nirvana", "miserable");
 
-    private LinkedList<Task> tasks;
+    private final LinkedList<Task> tasks;
 
     private int MAX = 10;
 
