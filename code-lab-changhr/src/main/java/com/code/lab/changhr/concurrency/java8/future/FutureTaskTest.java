@@ -1,7 +1,5 @@
 package com.code.lab.changhr.concurrency.java8.future;
 
-import org.springframework.util.concurrent.ListenableFutureTask;
-
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -28,18 +26,37 @@ public class FutureTaskTest {
             }
     );
 
-    public static void main(String[] args) {
-        ListenableFutureTask<String> futureTask = new ListenableFutureTask<>(() -> {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        //ListenableFutureTask<String> futureTask = new ListenableFutureTask<>(() -> {
+        //    TimeUnit.SECONDS.sleep(1);
+        //    return Thread.currentThread().getName() + " hello";
+        //});
+        //
+        //futureTask.addCallback(
+        //        result -> System.out.println(result + " world"),
+        //        ex -> System.out.println(ex.getMessage())
+        //);
+        //
+        //EXECUTORS.execute(futureTask);
+
+        SimpleFutureTask<String> myFutureTask = new SimpleFutureTask<>(() -> {
+            TimeUnit.SECONDS.sleep(3);
+            return "hello future task!";
+        }, "firstTask");
+
+        SimpleFutureTask<String> myFutureTask2 = new SimpleFutureTask<>(() -> {
             TimeUnit.SECONDS.sleep(1);
-            return Thread.currentThread().getName() + " hello";
-        });
+            return "hello future task2";
+        }, "secondTask");
 
-        futureTask.addCallback(
-                result -> System.out.println(result + " world"),
-                ex -> System.out.println(ex.getMessage())
-        );
+        EXECUTORS.execute(myFutureTask);
+        EXECUTORS.execute(myFutureTask2);
 
-        EXECUTORS.execute(futureTask);
+        String s = myFutureTask.get();
+        System.out.println(s);
+
+        String s1 = myFutureTask2.get();
+        System.out.println(s1);
     }
 
 }
