@@ -34,6 +34,8 @@ public class FutureBaseTest {
         try {
             // 获取异步操作的结果，如果最终被阻塞，无法得到结果，那么在最多等待 1 秒钟之后退出
             Double result = future.get(1, TimeUnit.SECONDS);
+
+            System.out.println("计算结果：" + result);
         } catch (ExecutionException e) {
             // 计算抛出一个异常
         } catch (InterruptedException e) {

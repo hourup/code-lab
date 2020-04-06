@@ -2,6 +2,7 @@ package com.code.lab.changhr.concurrency.java8.future;
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author changhr
@@ -9,24 +10,27 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class FutureTaskTest {
 
-    private static AtomicInteger atomicInteger = new AtomicInteger(0);
-
-    public static Integer getNextSequence() {
-        return atomicInteger.getAndIncrement();
-    }
-
-    private static final Executor EXECUTORS = new ThreadPoolExecutor(
+    /** 工作线程池 */
+    private static final AtomicLong THREAD_COUNT = new AtomicLong(0L);
+    private static final ExecutorService EXECUTORS = new ThreadPoolExecutor(
             8, 16, 0, TimeUnit.MICROSECONDS,
             new LinkedBlockingQueue<>(256),
-            r -> {
-                Thread thread = new Thread(r);
+            runnable -> {
+                Thread thread = new Thread(runnable);
                 thread.setDaemon(false);
-                thread.setName("work-thread-" + getNextSequence());
+                thread.setName("work-thread-" + THREAD_COUNT.getAndIncrement());
                 return thread;
             }
     );
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
+
+        FutureTask<String> simpleFutureTask = new FutureTask<String>(() -> String.valueOf(System.currentTimeMillis()));
+
+        EXECUTORS.submit(simpleFutureTask);
+        String s2 = simpleFutureTask.get();
+        System.out.println(s2);
+
         //ListenableFutureTask<String> futureTask = new ListenableFutureTask<>(() -> {
         //    TimeUnit.SECONDS.sleep(1);
         //    return Thread.currentThread().getName() + " hello";

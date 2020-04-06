@@ -1,9 +1,11 @@
 package com.code.lab.changhr.concurrency.guava;
 
+import com.code.lab.changhr.concurrency.utils.Delay;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.*;
 import org.apache.commons.lang3.time.StopWatch;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -35,28 +37,32 @@ public class ListenableFutureDemo3 {
 
         ListenableFuture<List<String>> composeFutures = Futures.allAsList(work1Future, work2Future, work3Future);
 
-        //Futures.addCallback(composeFutures, new FutureCallback<List<String>>() {
-        //
-        //    @Override
-        //    public void onSuccess(@Nullable List<String> result) {
-        //            assert result != null;
-        //            resultList.addAll(result);
-        //    }
-        //
-        //    @Override
-        //    public void onFailure(Throwable t) {
-        //            throw new RuntimeException(t);
-        //    }
-        //}, service);
+        Futures.addCallback(composeFutures, new FutureCallback<List<String>>() {
 
-        resultList = composeFutures.get();
+            @Override
+            public void onSuccess(@Nullable List<String> result) {
+                assert result != null;
+                resultList.addAll(result);
+            }
 
-        resultList.forEach(System.out::println);
+            @Override
+            public void onFailure(Throwable t) {
+                throw new RuntimeException(t);
+            }
+        }, service);
+
+//        resultList = composeFutures.get();
+
+        Delay.delay(1000);
+        if (composeFutures.isDone()) {
+            resultList.forEach(System.out::println);
+        }
+
 
         stopWatch.stop();
         System.out.println("耗时：" + stopWatch.getTime(TimeUnit.MILLISECONDS));
 
-        service.shutdown();
+//        service.shutdown();
     }
 
 
