@@ -4,6 +4,7 @@ import com.example.tddinspringboot.TddInSpringbootApplication;
 import com.example.tddinspringboot.repository.UserEntity;
 import com.example.tddinspringboot.repository.UserRepository;
 import com.example.tddinspringboot.service.domain.UserDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -44,8 +45,11 @@ public class UserControllerIntegrationTest {
     @MockBean
     private UserRepository userRepository;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     /**
-     *  Mock Repository 数据,不依赖数据库
+     * Mock Repository 数据,不依赖数据库
      */
     @PostConstruct
     public void before() {
@@ -87,6 +91,27 @@ public class UserControllerIntegrationTest {
                 .param("nickName", "tdd")
                 .param("gender", "male")
                 .param("age", "18")
+
+        ).andExpect(status().isOk())
+                .andDo(print())
+                .andReturn();
+
+    }
+
+    @Test
+    public void test_insert_user2() throws Exception {
+
+        UserDTO mockUserDto = new UserDTO();
+        mockUserDto.setUsername("TDD");
+        mockUserDto.setNickName("tdd");
+        mockUserDto.setGender("male");
+        mockUserDto.setAge(18);
+
+        String content = objectMapper.writeValueAsString(mockUserDto);
+
+        MvcResult mvcResult = mockMvc.perform(post("/user/add")
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON_UTF8)
+                .content(content)
 
         ).andExpect(status().isOk())
                 .andDo(print())

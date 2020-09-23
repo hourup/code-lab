@@ -24,9 +24,21 @@ public class UserController {
     public JsonResult add(UserDTO UserDTO) {
         JsonResult JsonResult = new JsonResult();
         Optional<UserDTO> result = userService.add(UserDTO);
-        if (result.isPresent()){
+        if (result.isPresent()) {
             JsonResult.setData(result.get());
-        }else {
+        } else {
+            throw new RuntimeException("add 异常");
+        }
+        return JsonResult;
+    }
+
+    @PostMapping("/add2")
+    public JsonResult add2(@RequestBody UserDTO UserDTO) {
+        JsonResult JsonResult = new JsonResult();
+        Optional<UserDTO> result = userService.add(UserDTO);
+        if (result.isPresent()) {
+            JsonResult.setData(result.get());
+        } else {
             throw new RuntimeException("add 异常");
         }
         return JsonResult;
